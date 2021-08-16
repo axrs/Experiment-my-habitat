@@ -6,7 +6,8 @@ ARG HABITAT_USER_PASSWORD
 # Drop down to the default ubuntu `root` user and change the `habitat` user to be something more personal
 USER root
 COPY scripts/as_root/rename_habitat_user.sh ./
-RUN bash rename_habitat_user.sh && rm -f rename_habitat_user.sh
+RUN bash rename_habitat_user.sh
+RUN rm -f rename_habitat_user.sh
 
 COPY scripts/as_root/install_docker.sh ./
 RUN bash install_docker.sh && rm -f install_docker.sh

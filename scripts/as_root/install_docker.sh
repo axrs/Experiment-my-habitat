@@ -5,9 +5,9 @@
 ## RUN bash install_docker.sh && rm -f install_docker.sh
 set -e
 
+groupadd docker
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh > /dev/null 2>&1
 rm -f get-docker.sh
 usermod -aG docker $HABITAT_USER
-touch /var/run/docker.sock
-chown root:docker /var/run/docker.sock
+newgrp docker

@@ -1,29 +1,63 @@
 # My Habitat
 
-My Dockerised Developer Environment based on
+My [Dockerised](https://docker.com) Developer Environment based on
 [habitat](https://github.com/ardourtech/habitat) and
 [habitat-cli](https://github.com/ardourtech/habitat-cli)
 
-## Building an Environment
+## Using
 
-### Windows
+### Configuration
+
+1. Configure a new Environment by creating a Dockerfile and scripting dependency installation
+1. Build the environment using the `habitat-cli`
+
+### Development
+
+1. Start the configured Environment by specifying the container and giving it a name.
+1. Connect into the Environment, and run necessary commands.
+1. Once finished, Stop the Environment by Name to free up host resources.
+
+## Commands
+
+### Building an Environment
+
+> Note: `$HABITAT_USER` and `$HABITAT_USER_PASSWORD` docker arguments will be
+> provided (and prompted for) by the `habitat-cli`
 
 ```shell
+# Windows
 habitat.exe build \
   --user axrs \
   --directory . \
   --file .\<env-name>\Dockerfile \
   --tag my-habitat
-```
 
-### MacOS/Linux
-
-```shell
+# MacOS/Unix
 habitat build \
   --user axrs \
   --directory . \
   --file ./<env-name>/Dockerfile \
   --tag my-habitat
+```
+
+### Starting an Environment
+
+```shell
+# Windows
+habitat.exe start --image <image-name>:<tag> --name <env-name>
+
+#MacOS/Unix
+habitat start --image <image-name>:<tag> --name <env-name>
+```
+
+### Connecting into the Environment
+
+```shell
+# Windows
+iex "$(habitat.exec connect --name <env-name>)"
+
+# MacOS/Unix
+eval "$(habitat connect --name <env-name>)"
 ```
 
 ## Project Structure

@@ -23,3 +23,4 @@ mv idea-IU* idea-IU-$IDEA_VERSION
 echo "set -gx PATH \$PATH \$HOME/idea-IU-$IDEA_VERSION/bin" >> "$HOME/.config/omf/init.fish"
 
 # Validation at the developer dependencies are installed and available
+fish -c 'docker --version'
