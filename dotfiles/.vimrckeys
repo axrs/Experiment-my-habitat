@@ -1,0 +1,41 @@
+" jk is escape
+inoremap jk <esc>
+inoremap kj <esc>
+
+" Jump long lines as standard lines
+nnoremap j gj
+nnoremap k gk
+nnoremap H ^
+nnoremap L $
+
+" Bad Habit Keys
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+noremap <space> <NOP>
+" inoremap <backspace> <NOP>
+" nnoremap <backspace> <NOP>
+
+" Kill bad keys
+noremap Q <NOP>
+noremap! <Up> <NOP>
+noremap! <Down> <NOP>
+noremap! <Left> <NOP>
+noremap! <Right> <NOP>
+
+" Indent
+vnoremap <tab> >
+vnoremap <s-tab> <
+
+
+" Search and replace selection
+vnoremap <leader>s y:.,$s/\V<c-r>"//gc\|1,''-&&\|'<<left><left><left><left><left><left><left><left><left><left><left><left><left><left>
+
+" Make search appear in middle of screen
+:nnoremap n nzz
+:nnoremap N Nzz
+:nnoremap * *zz
+:nnoremap # #zz
+:nnoremap g* g*zz
+:nnoremap g# g#zz
