@@ -44,10 +44,10 @@ habitat build \
 
 ```shell
 # Windows
-habitat.exe start --image <image-name>:<tag> --name <env-name>
+habitat.exe start --image <image-name>:<tag> --name <env-name> --with-x11-display --with-docker
 
 #MacOS/Unix
-habitat start --image <image-name>:<tag> --name <env-name>
+habitat start --image <image-name>:<tag> --name <env-name> --with-x11-display --with-docker
 ```
 
 ### Connecting into the Environment
