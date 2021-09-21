@@ -4,7 +4,6 @@
 ## RUN bash setup.sh && rm -f setup.sh
 set -euo pipefail
 # Installation of Development dependencies that can be conducted as the current user
-IDEA_VERSION='2021.2'
 
 ## Install Nerd Fonts
 echo 'Installing Nerd Fonts'
@@ -14,13 +13,12 @@ rm -f JetBrainsMono.zip
 echo 'Updating Font Cache'
 fc-cache -fv > /dev/null 2>&1
 
-## IntelliJ
-echo "Installing IntelliJ $IDEA_VERSION"
-wget --quiet https://download.jetbrains.com/idea/ideaIU-$IDEA_VERSION.tar.gz
-tar -xf ideaIU-$IDEA_VERSION.tar.gz &>/dev/null
-rm -f ideaIU-$IDEA_VERSION.tar.gz
-mv idea-IU* idea-IU-$IDEA_VERSION
-echo "set -gx PATH \$PATH \$HOME/idea-IU-$IDEA_VERSION/bin" >> "$HOME/.config/omf/init.fish"
-
 # Validation at the developer dependencies are installed and available
 fish -c 'docker --version'
+
+maven_repo_location="$(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)"
+[[ "$maven_repo_location" == "/volumes/maven-cache" ]] || exit 1
+
+sed -i -e "s/habitat/${HABITAT_USER}/g" "$HOME/.clojure/bin/clj"
+sed -i -e "s/habitat/${HABITAT_USER}/g" "$HOME/.clojure/bin/clojure"
+fish -c 'clojure -e "(inc 1)"'

@@ -9,15 +9,18 @@ LABEL HABITAT_WITH_DOCKER=true
 # Drop down to the default ubuntu `root` user and change the `habitat` user to be something more personal
 USER root
 COPY scripts/as_root/rename_habitat_user.sh ./
-RUN bash rename_habitat_user.sh && rm -f rename_habitat_user.sh
+RUN bash rename_habitat_user.sh && rm -f /home/${HABITAT_USER}/rename_habitat_user.sh
+
+COPY scripts/as_root/install_utilities.sh ./
+RUN bash install_utilities.sh && rm -f install_utilities.sh
 
 COPY scripts/as_root/install_docker.sh ./
 RUN bash install_docker.sh && rm -f install_docker.sh
 
 # Create Logical Volumes for use with other docker containers and environments
 LABEL HABITAT_VOLUME_ROOT="/volumes/"
-LABEL HABITAT_VOLUMES=projects,maven-cache
-RUN mkdir -p /volumes/projects /volumes/maven-cache
+LABEL HABITAT_VOLUMES=projects,maven-cache,intellij-config
+RUN mkdir -p /volumes/projects /volumes/maven-cache /volumes/intellij-config
 RUN chown -R ${HABITAT_USER}:${HABITAT_USER} /volumes \
     && chmod -R 775 /volumes \
     && chmod -R g+s /volumes
@@ -30,9 +33,10 @@ ADD --chown=$HABITAT_USER:$HABITAT_USER dotfiles /home/$HABITAT_USER/dotfiles
 RUN rsync -avz $HOME/dotfiles/ $HOME/ && rm -rf dotfiles
 
 # Install Software and Utilities
-ARG IDEA_VERSION=2021.2
-COPY scripts/setup.sh scripts/install_github_releases.sh ./
-RUN bash setup.sh && rm -f setup.sh
-RUN bash install_github_releases.sh && rm -f install_github_releases.sh
+COPY scripts/*.sh ./
+RUN bash setup.sh
+RUN bash install_github_releases.sh
+RUN bash install_intellij.sh
+RUN rm -f *.sh
 
 ENTRYPOINT ["fish"]

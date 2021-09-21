@@ -2,8 +2,8 @@
 ## Dockerfile Usage:
 ## USER root
 ## COPY scripts/as_root/rename_habitat_user.sh ./
-## RUN bash rename_habitat_user.sh && rm -f rename_habitat_user.sh
-set -e
+## RUN bash rename_habitat_user.sh && rm -f /home/${HABITAT_USER}/rename_habitat_user.sh
+set -eou pipefail
 groupmod --new-name $HABITAT_USER habitat
 usermod \
     --home /home/$HABITAT_USER \
