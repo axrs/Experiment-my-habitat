@@ -2,7 +2,7 @@
 ## Dockerfile Usage:
 ## COPY scripts/setup.sh ./
 ## RUN bash setup.sh && rm -f setup.sh
-set -e
+set -euo pipefail
 # Installation of Development dependencies that can be conducted as the current user
 IDEA_VERSION='2021.2'
 
@@ -16,7 +16,7 @@ fc-cache -fv > /dev/null 2>&1
 
 ## IntelliJ
 echo "Installing IntelliJ $IDEA_VERSION"
-wget -q https://download.jetbrains.com/idea/ideaIU-$IDEA_VERSION.tar.gz
+wget --quiet https://download.jetbrains.com/idea/ideaIU-$IDEA_VERSION.tar.gz
 tar -xf ideaIU-$IDEA_VERSION.tar.gz &>/dev/null
 rm -f ideaIU-$IDEA_VERSION.tar.gz
 mv idea-IU* idea-IU-$IDEA_VERSION

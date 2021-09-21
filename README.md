@@ -54,7 +54,7 @@ habitat start --image <image-name>:<tag> --name <env-name> --with-x11-display --
 
 ```shell
 # Windows
-iex "$(habitat.exec connect --name <env-name>)"
+iex "$(habitat.exe connect --name <env-name>)"
 
 # MacOS/Unix
 eval "$(habitat connect --name <env-name>)"
